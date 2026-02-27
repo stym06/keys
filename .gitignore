@@ -1,0 +1,4 @@
+keys
+*.db
+.env
+.DS_Store
