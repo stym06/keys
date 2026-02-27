@@ -18,23 +18,6 @@ cd keys
 go install .
 ```
 
-## Shell Completions
-
-Enable tab-completion for key names:
-
-```bash
-# zsh (add to ~/.zshrc)
-source <(keys completion zsh)
-
-# bash (add to ~/.bashrc)
-source <(keys completion bash)
-
-# fish
-keys completion fish | source
-```
-
-With [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions), you get inline ghost suggestions as you type.
-
 ## Usage
 
 ### Store a key
@@ -129,6 +112,23 @@ keys nuke                  # delete all keys in active profile
 ```
 
 Requires typing `nuke` to confirm.
+
+## Shell Completions
+
+Enable tab-completion for key names:
+
+```bash
+# zsh (add to ~/.zshrc)
+source <(keys completion zsh)
+
+# bash (add to ~/.bashrc)
+source <(keys completion bash)
+
+# fish
+keys completion fish | source
+```
+
+With [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions), you get inline ghost suggestions as you type.
 
 ## License
 
