@@ -5,7 +5,7 @@ A fast, local CLI for managing API keys and secrets. Built with Go, SQLite, and 
 Keys are stored locally in `~/.keys/keys.db` — nothing leaves your machine.
 
 <p align="center">
-  <img src="assets/keys-see.svg" alt="keys see demo" width="620">
+  <img src="assets/keys-see.gif" alt="keys see demo" width="600">
 </p>
 
 ## Install
