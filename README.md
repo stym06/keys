@@ -11,15 +11,13 @@ Keys are stored locally in `~/.keys/keys.db` — nothing leaves your machine.
 ## Install
 
 ```bash
-go install github.com/stym06/keys@latest
+brew install stym06/tap/keys
 ```
 
-Or build from source:
+Or with Go:
 
 ```bash
-git clone https://github.com/stym06/keys.git
-cd keys
-go install .
+go install github.com/stym06/keys@latest
 ```
 
 ## Usage
