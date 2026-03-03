@@ -51,5 +51,5 @@ The formula lives at `stym06/homebrew-tap/Formula/keys.rb`. Update the `url` and
 Update `skills/keys-manager/SKILL.md` with any new commands or behavior changes, then publish:
 
 ```bash
-clawhub publish /path/to/skills/keys-manager --version X.Y.Z --changelog "description of changes"
+clawhub publish skills/keys-manager/ --version X.Y.Z --changelog "description of changes"
 ```
