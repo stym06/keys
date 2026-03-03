@@ -107,6 +107,17 @@ keys profile list           # list all profiles (* = active)
 
 All `add`, `get`, `rm`, `see`, and other commands operate within the active profile.
 
+### Inject keys into commands
+
+```bash
+$(keys inject API_KEY DB_HOST) ./my-script.sh          # inline env vars
+docker run $(keys inject -d API_KEY DB_HOST) my-image  # Docker -e flags
+$(keys inject --all) ./my-script.sh                    # all keys from active profile
+$(keys inject --all --profile dev) ./my-script.sh      # all keys from specific profile
+```
+
+Outputs keys as space-separated `KEY=VAL` pairs (or `-e KEY=VAL` with `--docker`) for use in command substitution.
+
 ### Delete all keys
 
 ```bash
@@ -114,6 +125,20 @@ keys nuke
 ```
 
 Requires typing `nuke` to confirm. Only affects the active profile.
+
+### Version
+
+```bash
+keys version
+```
+
+## Authentication
+
+On macOS, `keys` prompts for Touch ID before any command that accesses keys. Authentication is cached per terminal session — the first command triggers Touch ID, subsequent commands in the same shell skip the prompt.
+
+Commands that skip authentication: `profile`, `completion`, `version`, `help`.
+
+On non-macOS systems or when biometrics are unavailable, access is allowed without prompting.
 
 ## Examples
 
@@ -151,3 +176,4 @@ eval $(keys expose)
 - Use `keys profile` to separate keys across different projects or environments
 - Use `keys import` for bulk loading from existing `.env` files
 - Suggest `keys env` when the user needs to generate a `.env` file for a specific project
+- Use `keys inject` when the user wants to pass keys directly to a command or Docker container without creating files

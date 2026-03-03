@@ -135,14 +135,13 @@ func AddKey(name, value string) error {
 	return err
 }
 
-func GetAllKeys() ([]Key, error) {
+func GetAllKeysForProfile(profile string) ([]Key, error) {
 	d, err := open()
 	if err != nil {
 		return nil, err
 	}
 	defer d.Close()
 
-	profile := GetActiveProfile()
 	rows, err := d.Query(`SELECT name, value, COALESCE(updated_at, 0) FROM keys WHERE profile = ? ORDER BY name`, profile)
 	if err != nil {
 		return nil, err
@@ -160,7 +159,11 @@ func GetAllKeys() ([]Key, error) {
 	return keys, rows.Err()
 }
 
-func GetKeysByNames(names []string) ([]Key, error) {
+func GetAllKeys() ([]Key, error) {
+	return GetAllKeysForProfile(GetActiveProfile())
+}
+
+func GetKeysByNamesForProfile(names []string, profile string) ([]Key, error) {
 	if len(names) == 0 {
 		return nil, nil
 	}
@@ -170,7 +173,6 @@ func GetKeysByNames(names []string) ([]Key, error) {
 	}
 	defer d.Close()
 
-	profile := GetActiveProfile()
 	query := `SELECT name, value, COALESCE(updated_at, 0) FROM keys WHERE profile = ? AND name IN (`
 	args := []interface{}{profile}
 	for i, n := range names {
@@ -197,6 +199,10 @@ func GetKeysByNames(names []string) ([]Key, error) {
 		keys = append(keys, k)
 	}
 	return keys, rows.Err()
+}
+
+func GetKeysByNames(names []string) ([]Key, error) {
+	return GetKeysByNamesForProfile(names, GetActiveProfile())
 }
 
 func KeyExists(name string) (bool, error) {

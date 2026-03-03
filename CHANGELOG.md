@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+- Add `keys inject` command — output keys as inline env vars or Docker `-e` flags
+- Supports `--docker` / `-d` for Docker format, `--all` / `-a` for all keys, `--profile` / `-p` to target a specific profile
+- Shell completion for key names with multiple argument support
+
 ## 0.2.0
 
 - Add Touch ID authentication (macOS) — biometric prompt before accessing keys
