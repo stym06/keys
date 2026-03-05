@@ -17,6 +17,7 @@ var exposeCmd = &cobra.Command{
 			return err
 		}
 		for _, k := range keys {
+			_ = db.LogAccess(k.Name, "expose", "cli")
 			fmt.Printf("export %s=%s\n", k.Name, k.Value)
 		}
 		return nil

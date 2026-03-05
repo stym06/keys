@@ -115,7 +115,115 @@ func open() (*sql.DB, error) {
 		}
 	}
 
+	// Migrate: create audit_log table
+	_, err = d.Exec(`CREATE TABLE IF NOT EXISTS audit_log (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		profile TEXT NOT NULL,
+		key_name TEXT NOT NULL,
+		action TEXT NOT NULL,
+		source TEXT NOT NULL DEFAULT '',
+		accessed_at INTEGER NOT NULL
+	)`)
+	if err != nil {
+		d.Close()
+		return nil, err
+	}
+
 	return d, nil
+}
+
+func LogAccess(keyName, action, source string) error {
+	d, err := open()
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+
+	profile := GetActiveProfile()
+	now := time.Now().Unix()
+	_, err = d.Exec(
+		`INSERT INTO audit_log (profile, key_name, action, source, accessed_at) VALUES (?, ?, ?, ?, ?)`,
+		profile, keyName, action, source, now,
+	)
+	return err
+}
+
+type AuditEntry struct {
+	KeyName    string
+	Action     string
+	Source     string
+	AccessedAt int64
+	Count      int
+}
+
+func GetAuditLog(limit int) ([]AuditEntry, error) {
+	d, err := open()
+	if err != nil {
+		return nil, err
+	}
+	defer d.Close()
+
+	profile := GetActiveProfile()
+	rows, err := d.Query(
+		`SELECT key_name, action, source, accessed_at FROM audit_log WHERE profile = ? ORDER BY accessed_at DESC LIMIT ?`,
+		profile, limit,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var entries []AuditEntry
+	for rows.Next() {
+		var e AuditEntry
+		if err := rows.Scan(&e.KeyName, &e.Action, &e.Source, &e.AccessedAt); err != nil {
+			return nil, err
+		}
+		entries = append(entries, e)
+	}
+	return entries, rows.Err()
+}
+
+func GetAuditSummary() ([]AuditEntry, error) {
+	d, err := open()
+	if err != nil {
+		return nil, err
+	}
+	defer d.Close()
+
+	profile := GetActiveProfile()
+	rows, err := d.Query(
+		`SELECT key_name, COUNT(*) as cnt, MAX(accessed_at) as last_access
+		 FROM audit_log WHERE profile = ?
+		 GROUP BY key_name ORDER BY last_access DESC`,
+		profile,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var entries []AuditEntry
+	for rows.Next() {
+		var e AuditEntry
+		if err := rows.Scan(&e.KeyName, &e.Count, &e.AccessedAt); err != nil {
+			return nil, err
+		}
+		entries = append(entries, e)
+	}
+	return entries, rows.Err()
+}
+
+func ClearAuditLog() error {
+	d, err := open()
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+
+	profile := GetActiveProfile()
+	_, err = d.Exec(`DELETE FROM audit_log WHERE profile = ?`, profile)
+	return err
 }
 
 func AddKey(name, value string) error {

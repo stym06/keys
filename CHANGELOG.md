@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0
+
+- Add `keys audit` command — view access history for your keys
+  - `keys audit` shows summary with access counts and last used time per key
+  - `keys audit --log` shows full access log with action, source, and timestamp
+  - `keys audit --clear` clears the audit log
+- Add `keys check` command — verify required keys are present
+  - Reads `.keys.required` file (one key name per line, supports `#` comments)
+  - Reports which keys are present or missing, exits with code 1 if any are missing
+  - Useful for CI and agent pre-flight checks
+- Access logging: `get`, `inject`, and `expose` now record access events for audit
+- Add `--version` flag to root command
+
 ## 0.3.0
 
 - Add `keys inject` command — output keys as inline env vars or Docker `-e` flags

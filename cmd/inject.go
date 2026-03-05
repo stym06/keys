@@ -50,6 +50,10 @@ Examples:
 			return nil
 		}
 
+		for _, k := range keys {
+			_ = db.LogAccess(k.Name, "inject", "cli")
+		}
+
 		var parts []string
 		for _, k := range keys {
 			if dockerFlag {

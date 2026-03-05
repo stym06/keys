@@ -17,8 +17,9 @@ var noAuthCommands = map[string]bool{
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "keys",
-	Short: "Manage API keys locally",
+	Use:     "keys",
+	Short:   "Manage API keys locally",
+	Version: Version,
 }
 
 func init() {

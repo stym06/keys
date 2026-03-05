@@ -118,6 +118,34 @@ $(keys inject --all --profile dev) ./my-script.sh      # all keys from specific 
 
 Outputs keys as space-separated `KEY=VAL` pairs (or `-e KEY=VAL` with `--docker`) for use in command substitution.
 
+### Audit key access
+
+```bash
+keys audit              # summary: access count + last used per key
+keys audit --log        # full access log (most recent first)
+keys audit --log -n 20  # last 20 events
+keys audit --clear      # clear the audit log
+```
+
+Tracks when keys are accessed via `get`, `inject`, and `expose`. Useful for understanding which keys agents and scripts are using.
+
+### Check required keys
+
+```bash
+keys check              # reads .keys.required from current directory
+keys check reqs.txt     # custom file
+```
+
+Reads key names from a file (one per line, `#` comments supported) and reports which are present or missing. Exits with code 1 if any are missing — useful for CI and agent pre-flight checks.
+
+Example `.keys.required`:
+```
+# Agent dependencies
+OPENAI_KEY
+SERP_API_KEY
+DATABASE_URL
+```
+
 ### Delete all keys
 
 ```bash
@@ -130,6 +158,7 @@ Requires typing `nuke` to confirm. Only affects the active profile.
 
 ```bash
 keys version
+keys --version
 ```
 
 ## Authentication
@@ -177,3 +206,5 @@ eval $(keys expose)
 - Use `keys import` for bulk loading from existing `.env` files
 - Suggest `keys env` when the user needs to generate a `.env` file for a specific project
 - Use `keys inject` when the user wants to pass keys directly to a command or Docker container without creating files
+- Use `keys audit` to review which keys are being accessed and how often
+- Use `keys check` before running agents to verify all required keys are available

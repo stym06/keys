@@ -22,6 +22,7 @@ var getCmd = &cobra.Command{
 			if err != nil {
 				return err
 			}
+			_ = db.LogAccess(key.Name, "get", "cli")
 			fmt.Fprintln(out, key.Value)
 			return nil
 		}
@@ -48,6 +49,7 @@ var getCmd = &cobra.Command{
 			return nil
 		}
 		if picked := final.Picked(); picked != nil {
+			_ = db.LogAccess(picked.Name, "get", "picker")
 			fmt.Fprintln(out, picked.Value)
 		}
 		return nil
