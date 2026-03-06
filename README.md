@@ -11,6 +11,12 @@ Keys are stored locally in `~/.keys/keys.db` — nothing leaves your machine.
 ## Install
 
 ```bash
+curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh
+```
+
+Or with Homebrew:
+
+```bash
 brew install stym06/tap/keys
 ```
 
