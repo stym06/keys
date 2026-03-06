@@ -113,6 +113,59 @@ keys profile use default   # switch back
 keys profile list          # show all profiles (* = active)
 ```
 
+### Inject keys into commands
+
+```bash
+$(keys inject API_KEY DB_HOST) ./my-script.sh          # inline env vars
+docker run $(keys inject -d API_KEY DB_HOST) my-image  # Docker -e flags
+$(keys inject --all) ./my-script.sh                    # all keys
+$(keys inject --all --profile dev) ./my-script.sh      # from specific profile
+```
+
+### Sync keys between machines
+
+```bash
+# On machine A (has the keys)
+keys sync serve
+# Serving 12 keys from profile "default"
+# Passphrase: olive-quilt-haven
+# Waiting for connections...
+
+# On machine B (wants the keys)
+keys sync pull                       # auto-discover via mDNS
+keys sync pull 192.168.1.10:7331     # or connect directly
+```
+
+Peer-to-peer sync over the local network. Auto-discovers peers via mDNS/Bonjour, encrypted with a one-time passphrase. Works over WiFi, Tailscale, or any reachable network.
+
+### Audit key access
+
+```bash
+keys audit              # summary: access count + last used per key
+keys audit --log        # full access log (most recent first)
+keys audit --log -n 20  # last 20 events
+keys audit --clear      # clear the audit log
+```
+
+Tracks when keys are accessed via `get`, `inject`, and `expose`.
+
+### Check required keys
+
+```bash
+keys check              # reads .keys.required from current directory
+keys check reqs.txt     # custom file
+```
+
+Reads key names from a file (one per line, `#` comments supported) and reports which are present or missing. Exits with code 1 if any are missing — useful for CI and agent pre-flight checks.
+
+Example `.keys.required`:
+```
+# Agent dependencies
+OPENAI_KEY
+SERP_API_KEY
+DATABASE_URL
+```
+
 ### Nuke
 
 ```bash
