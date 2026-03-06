@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"keys/db"
+	"github.com/stym06/keys/db"
 )
 
 func setupTestEnv(t *testing.T) {

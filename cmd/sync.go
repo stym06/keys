@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"keys/db"
-	ksync "keys/sync"
+	"github.com/stym06/keys/db"
+	ksync "github.com/stym06/keys/sync"
 
 	"github.com/spf13/cobra"
 )

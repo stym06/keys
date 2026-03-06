@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"keys/db"
+	"github.com/stym06/keys/db"
 
 	"github.com/grandcat/zeroconf"
 )

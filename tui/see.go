@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"keys/db"
+	"github.com/stym06/keys/db"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"

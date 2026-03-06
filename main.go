@@ -1,6 +1,6 @@
 package main
 
-import "keys/cmd"
+import "github.com/stym06/keys/cmd"
 
 func main() {
 	cmd.Execute()

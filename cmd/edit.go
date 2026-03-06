@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"keys/db"
-	"keys/tui"
+	"github.com/stym06/keys/db"
+	"github.com/stym06/keys/tui"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"

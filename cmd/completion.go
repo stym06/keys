@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"keys/db"
+	"github.com/stym06/keys/db"
 
 	"github.com/spf13/cobra"
 )

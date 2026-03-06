@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"keys/db"
+	"github.com/stym06/keys/db"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

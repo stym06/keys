@@ -1,4 +1,4 @@
-module keys
+module github.com/stym06/keys
 
 go 1.25.4
 
