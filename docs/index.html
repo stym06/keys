@@ -92,15 +92,24 @@
     }
     .hero-install:hover { border-color: var(--accent); }
     .hero-install .prompt { color: var(--text-muted); }
-    .copy-hint {
-      display: block;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      transition: color 0.2s;
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
     }
-    .copy-hint.copied { color: var(--green); }
+    .copy-btn:hover { background: rgba(255,255,255,0.08); }
+    .hero-install, .install-option { position: relative; }
+    .copy-hint {
+      display: none;
+    }
 
     .hero-demo {
       margin-top: 48px;
@@ -302,7 +311,11 @@
     <p>A fast CLI for storing, syncing, and injecting API keys. No cloud, no config files. Everything stays on your machine.</p>
     <div class="hero-install" onclick="copyCommand(this, 'curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh')">
       <span class="prompt">$</span> curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh
-      <span class="copy-hint">click to copy</span>
+      <button class="copy-btn" title="Copy">📋</button>
+    </div>
+    <div class="hero-install" style="margin-top: 12px" onclick="copyCommand(this, 'brew install stym06/tap/keys')">
+      <span class="prompt">$</span> brew install stym06/tap/keys
+      <button class="copy-btn" title="Copy">📋</button>
     </div>
     <div class="hero-demo">
       <img src="https://raw.githubusercontent.com/stym06/keys/main/assets/keys-see.gif" alt="keys see demo">
@@ -432,17 +445,17 @@
       <div class="install-option" onclick="copyCommand(this, 'curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh')">
         <h3>Quick Install</h3>
         <code>curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh</code>
-        <span class="copy-hint">click to copy</span>
+        <button class="copy-btn" title="Copy">📋</button>
       </div>
       <div class="install-option" onclick="copyCommand(this, 'brew install stym06/tap/keys')">
         <h3>Homebrew</h3>
         <code>brew install stym06/tap/keys</code>
-        <span class="copy-hint">click to copy</span>
+        <button class="copy-btn" title="Copy">📋</button>
       </div>
       <div class="install-option" onclick="copyCommand(this, 'go install github.com/stym06/keys@latest')">
         <h3>Go</h3>
         <code>go install github.com/stym06/keys@latest</code>
-        <span class="copy-hint">click to copy</span>
+        <button class="copy-btn" title="Copy">📋</button>
       </div>
     </div>
   </div>
@@ -457,13 +470,11 @@
 <script>
 function copyCommand(el, text) {
   navigator.clipboard.writeText(text).then(function() {
-    var hint = el.querySelector('.copy-hint');
-    if (hint) {
-      hint.textContent = 'copied!';
-      hint.classList.add('copied');
+    var btn = el.querySelector('.copy-btn');
+    if (btn) {
+      btn.textContent = '✅';
       setTimeout(function() {
-        hint.textContent = 'click to copy';
-        hint.classList.remove('copied');
+        btn.textContent = '📋';
       }, 2000);
     }
   });
