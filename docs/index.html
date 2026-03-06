@@ -79,19 +79,25 @@
       margin: 0 auto 32px;
     }
     .hero-install {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 14px 28px;
+      padding: 14px 20px;
       font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: var(--green);
       cursor: pointer;
       transition: border-color 0.2s;
     }
     .hero-install:hover { border-color: var(--accent); }
     .hero-install .prompt { color: var(--text-muted); }
+    .hero-install .cmd-text { flex: 1; text-align: left; }
     .copy-btn {
       background: none;
       border: none;
@@ -100,13 +106,10 @@
       padding: 4px 8px;
       border-radius: 4px;
       transition: background 0.2s;
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
+      flex-shrink: 0;
+      margin-left: 12px;
     }
     .copy-btn:hover { background: rgba(255,255,255,0.08); }
-    .hero-install, .install-option { position: relative; }
     .copy-hint {
       display: none;
     }
@@ -242,15 +245,18 @@
     }
     .install-options {
       display: flex;
-      gap: 24px;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 680px;
+      margin: 0 auto;
     }
     .install-option {
+      display: flex;
+      align-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 24px 32px;
+      padding: 16px 20px;
       text-align: left;
     }
     .install-option h3 {
@@ -258,8 +264,11 @@
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 12px;
+      min-width: 100px;
+      margin-right: 16px;
+      margin-bottom: 0;
     }
+    .install-option code { flex: 1; }
     .install-option {
       cursor: pointer;
       transition: border-color 0.2s;
@@ -287,9 +296,24 @@
     @media (max-width: 640px) {
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 1rem; }
+      .hero-install {
+        font-size: 0.75rem;
+        padding: 12px 14px;
+      }
       .sync-terminals { grid-template-columns: 1fr; }
+      .terminal pre { font-size: 0.75rem; }
       .command-item { flex-direction: column; gap: 4px; }
       .command-item code { min-width: 0; }
+      .install-option {
+        flex-wrap: wrap;
+      }
+      .install-option h3 {
+        min-width: auto;
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      .install-option code { font-size: 0.8rem; }
+      .feature-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -310,11 +334,11 @@
     <h1>Your API keys,<br><span>locally managed.</span></h1>
     <p>A fast CLI for storing, syncing, and injecting API keys. No cloud, no config files. Everything stays on your machine.</p>
     <div class="hero-install" onclick="copyCommand(this, 'curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh')">
-      <span class="prompt">$</span> curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh
+      <span class="cmd-text"><span class="prompt">$</span> curl -sSL https://raw.githubusercontent.com/stym06/keys/main/install.sh | sh</span>
       <button class="copy-btn" title="Copy">📋</button>
     </div>
     <div class="hero-install" style="margin-top: 12px" onclick="copyCommand(this, 'brew install stym06/tap/keys')">
-      <span class="prompt">$</span> brew install stym06/tap/keys
+      <span class="cmd-text"><span class="prompt">$</span> brew install stym06/tap/keys</span>
       <button class="copy-btn" title="Copy">📋</button>
     </div>
     <div class="hero-demo">
