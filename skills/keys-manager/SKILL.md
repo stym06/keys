@@ -146,6 +146,22 @@ SERP_API_KEY
 DATABASE_URL
 ```
 
+### Sync keys between machines
+
+```bash
+# On machine A (has the keys)
+keys sync serve
+# Serving 12 keys from profile "default"
+# Passphrase: olive-quilt-haven
+# Waiting for connections...
+
+# On machine B (wants the keys)
+keys sync pull                       # auto-discover via mDNS
+keys sync pull 192.168.1.10:7331     # or connect directly
+```
+
+Peer-to-peer sync over the local network. Auto-discovers peers via mDNS (Bonjour), encrypted with a one-time passphrase (AES-256-GCM). Works over WiFi, Tailscale, or any reachable network. Smart merge: adds new keys, updates older ones, skips newer local ones.
+
 ### Delete all keys
 
 ```bash
@@ -208,3 +224,4 @@ eval $(keys expose)
 - Use `keys inject` when the user wants to pass keys directly to a command or Docker container without creating files
 - Use `keys audit` to review which keys are being accessed and how often
 - Use `keys check` before running agents to verify all required keys are available
+- Use `keys sync serve` + `keys sync pull` to transfer keys between machines without cloud services

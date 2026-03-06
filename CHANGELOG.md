@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0
+
+- Add `keys sync` — peer-to-peer key sync between machines over the local network
+  - `keys sync serve` broadcasts on the network via mDNS and serves keys encrypted with a one-time passphrase
+  - `keys sync pull` auto-discovers peers, or connects directly via `host:port`
+  - Encrypted transfer using AES-256-GCM with scrypt key derivation from the passphrase
+  - Smart merge: adds new keys, updates older ones, skips newer local ones
+  - Works over WiFi, Tailscale, or any network where devices can reach each other
+  - `--profile` flag to serve a specific profile
+
 ## 0.4.0
 
 - Add `keys audit` command — view access history for your keys
