@@ -2,7 +2,7 @@
 
 A fast, local CLI for managing API keys and secrets. Built with Go, SQLite, and [Bubble Tea](https://github.com/charmbracelet/bubbletea).
 
-Keys are stored locally in `~/.keys/keys.db` — nothing leaves your machine.
+Keys are stored locally in `~/.keys/keys.db` — nothing leaves your machine, so you can manage secrets offline.
 
 <p align="center">
   <img src="assets/keys-see.gif" alt="keys see demo" width="600">
